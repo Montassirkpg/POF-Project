@@ -1,0 +1,20 @@
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajouter un produit</title>
+  <link rel="stylesheet" href="/src/style/main.css">
+</head>
+<body>
+  <h1>Ajouter un produit</h1>
+  <form id="add-product-form">
+    <input type="text" name="libelle" placeholder="Libellé" required>
+    <textarea name="description" placeholder="Description" required></textarea>
+    <input type="number" name="prix" placeholder="Prix" required>
+    <input type="text" name="categorie" placeholder="Catégorie" required>
+    <input type="text" name="image_urls" placeholder="URL d'image (séparées par ;)" required>
+    <button type="submit">Ajouter</button>
+  </form>
+  <script type="module" src="/src/js/products.js"></script>
+</body>
+</html>
