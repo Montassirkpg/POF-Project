@@ -1,20 +1,29 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ajouter un produit</title>
-  <link rel="stylesheet" href="/src/style/main.css">
+  <meta charset="UTF-8" />
+  <title>Ajouter un Produit</title>
+  <link rel="stylesheet" href="/src/style/main.css" />
 </head>
 <body>
-  <h1>Ajouter un produit</h1>
-  <form id="add-product-form">
-    <input type="text" name="libelle" placeholder="Libellé" required>
-    <textarea name="description" placeholder="Description" required></textarea>
-    <input type="number" name="prix" placeholder="Prix" required>
-    <input type="text" name="categorie" placeholder="Catégorie" required>
-    <input type="text" name="image_urls" placeholder="URL d'image (séparées par ;)" required>
+  <h1>Ajouter un Produit</h1>
+
+  <form id="product-form" enctype="multipart/form-data">
+    <input type="text" name="label" placeholder="Nom du produit" required />
+    <input type="text" name="description" placeholder="Description" />
+    <input type="number" name="price" placeholder="Prix (€)" step="0.01" required />
+
+    <select name="category" id="category-select" required>
+      <option value="">-- Choisir une catégorie --</option>
+    </select>
+
+    <input type="file" name="images" accept="image/*" multiple required />
+
     <button type="submit">Ajouter</button>
   </form>
-  <script type="module" src="/src/js/products.js"></script>
+
+  <div id="result"></div>
+
+  <script type="module" src="/src/js/add-product.js"></script>
 </body>
 </html>
