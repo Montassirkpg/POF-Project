@@ -1,13 +1,18 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Détail Produit</title>
   <link rel="stylesheet" href="/src/style/main.css">
 </head>
 <body>
-  <h1>Détail Produit</h1>
-  <div id="product-detail"></div>
-  <script type="module" src="/src/js/products.js"></script>
+  <h1>Afficher un Produit</h1>
+
+  <input type="number" id="product-id" placeholder="Entrez un ID de produit" />
+<button id="fetch-product-btn">Afficher</button>
+<div id="product-detail"></div>
+
+<script type="module" src="/src/js/product.js"></script>
+
 </body>
 </html>
