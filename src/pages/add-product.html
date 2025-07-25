@@ -1,29 +1,37 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <title>Ajouter un Produit</title>
-  <link rel="stylesheet" href="/src/style/main.css" />
+  <link rel="stylesheet" href="../style.css" />
 </head>
+
 <body>
-  <h1>Ajouter un Produit</h1>
+  <section class="flex flex-1 column ai-center">
+    <div>
+      <h1>Ajouter un Produit</h1>
+    </div>
 
-  <form id="product-form" enctype="multipart/form-data">
-    <input type="text" name="label" placeholder="Nom du produit" required />
-    <input type="text" name="description" placeholder="Description" />
-    <input type="number" name="price" placeholder="Prix (€)" step="0.01" required />
+    <form id="product-form" enctype="multipart/form-data" class="flex column gap-8">
+      <input type="text" name="label" placeholder="Nom du produit" required />
+      <input type="text" name="description" placeholder="Description" />
+      <input type="number" name="price" placeholder="Prix (€)" step="0.01" required />
 
-    <select name="category" id="category-select" required>
-      <option value="">-- Choisir une catégorie --</option>
-    </select>
+      <select name="category" id="category-select" required>
+        <option value="">-- Choisir une catégorie --</option>
+      </select>
 
-    <input type="file" name="images" accept="image/*" multiple required />
+      <input type="file" name="images" accept="image/*" multiple required />
 
-    <button type="submit">Ajouter</button>
-  </form>
+      <button type="submit">Ajouter</button>
+    </form>
 
-  <div id="result"></div>
+    <div id="result"></div>
+
+  </section>
 
   <script type="module" src="/src/js/add-product.js"></script>
 </body>
+
 </html>

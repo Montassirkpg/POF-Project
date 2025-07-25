@@ -1,19 +1,28 @@
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inscription</title>
-  <link rel="stylesheet" href="/src/style/main.css">
+  <link rel="stylesheet" href="../style.css" />
 </head>
+
 <body>
-  <h1>Inscription</h1>
-  <form id="register-form">
-    <input type="text" id="username" placeholder="Nom" required>
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Mot de passe" required>
-    <button type="submit">S'inscrire</button>
-  </form>
-  <div id="register-error"></div>
+  <section class="flex flex-1 column ai-center">
+    <div>
+      <h1>Inscription</h1>
+    </div>
+
+    <form id="register-form" class="flex gap-2">
+      <input type="text" id="username" placeholder="Nom" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Mot de passe" required>
+      <button type="submit">S'inscrire</button>
+    </form>
+
+    <div id="register-error"></div>
+  </section>
   <script type="module" src="/src/js/auth.js"></script>
 </body>
+
 </html>

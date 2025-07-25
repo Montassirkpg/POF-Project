@@ -1,0 +1,38 @@
+@layer utilities {
+    .flex {
+        display: flex;
+    }
+
+    .flex-1{
+        flex:1;
+    }
+
+    .wrap {
+        flex-wrap: wrap;
+    }
+
+    .ai-center {
+        align-items: center;
+    }
+
+    .jc-center {
+        justify-content: center;
+    }
+
+    .ji-center {
+        justify-items: center;
+    }
+
+    .ac-center {
+        align-content: center;
+    }
+
+    .column {
+        flex-direction: column;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+}
