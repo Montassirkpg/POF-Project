@@ -1,7 +1,27 @@
 const API_URL = "http://localhost:5000/api/products";
 const container = document.getElementById("product-list");
 
-fetch(API_URL)
+function getCookie(name) {
+  const cookies = document.cookie.split("; ");
+  for (const c of cookies) {
+    const [k, v] = c.split("=");
+    if (k === name) return v;
+  }
+  return null;
+}
+await fetch("http://localhost:5000/authentication/csrf", {
+  method: "POST",
+  credentials: "include"
+});
+
+
+fetch(API_URL, {
+  method: "GET",
+  headers: {
+    "csrf-token": getCookie("csrf_token")
+  },
+  credentials: "include"
+})
   .then(response => response.json())
   .then(products => {
     console.log("Produits reçus :", products);

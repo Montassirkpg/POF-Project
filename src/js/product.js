@@ -20,25 +20,22 @@ button.addEventListener("click", () => {
       return response.json();
     })
     .then(product => {
-        console.log("Réponse produit :", product);
-
-  const p = product[0]; 
-  const images = product.images; 
-
-  const imageList = images && images.length
-    ? images.map(img => `
-        <img src="http://localhost:5000/uploads/${img.url}" alt="${p.label}" width="200" />
-      `).join('')
-    : `<p>Aucune image</p>`;
-
-  container.innerHTML = `
+      console.log("Réponse produit :", product);
+      const p = product[0];
+      const images = product.images;
+      const imageList = images && images.length
+        ? images.map(img => `
+       <img src="http://localhost:5000/uploads/${img.url}" alt="${p.label}" width="200" />
+       `).join('')
+        : `<p>Aucune image</p>`;
+      container.innerHTML = `
     <h2>${p.label}</h2>
     ${imageList}
     <p>Description : ${p.description}</p>
     <p>Prix : ${p.price} €</p>
     <p>Catégorie : ${p.category}</p>
   `;
-})
+    })
     .catch(error => {
       container.innerHTML = `<p>Erreur : ${error.message}</p>`;
     });
