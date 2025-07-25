@@ -87,7 +87,7 @@ const loginUser = async () => {
 
         if (response.ok) {
             alert('Connection réussie !');
-            window.location.href = '/src/pages/index.html';
+            window.location.href = '/index.html';
         } else {
             console.log(' Erreur login:', data);
             document.getElementById('login-error').textContent = data.message;
@@ -109,8 +109,6 @@ const logoutUser = async () => {
             method: 'POST',
             credentials: 'include'
         });
-
-        localStorage.removeItem('access_token');
         
         if (response.ok) {
             console.log('✅ Déconnexion réussie');
@@ -123,7 +121,6 @@ const logoutUser = async () => {
         
     } catch (error) {
         console.error('❌ Erreur lors de la déconnexion:', error);
-        localStorage.removeItem('access_token');
         window.location.href = '/index.html';
     }
 };
