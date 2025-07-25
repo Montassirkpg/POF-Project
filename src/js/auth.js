@@ -1,7 +1,36 @@
 
+
+let csrfToken = null;
+
+// Récupérer le token CSRF au chargement de la page
+const getCSRFToken = async () => {
+    try {
+        console.log('🔄 Récupération du token CSRF...');
+        const response = await fetch('http://localhost:5000/authentication/csrf', {
+            method: 'POST',
+            credentials: 'include'
+        });
+        if (response.ok) {
+            csrfToken = await response.text();
+            console.log('Token CSRF reçu:', csrfToken);
+        } else {
+            console.log(' Erreur récupération CSRF:', response.status);
+        }
+    } catch (error) {
+        console.error(' Erreur CSRF:', error);
+    }
+};
+
+// Charger le token CSRF dès le début
+getCSRFToken();
+
+
+
 // Inscription utilisateur
 const registerUser = async () => {
-
+    // S'assurer d'avoir le token CSRF
+    if (!csrfToken) await getCSRFToken();
+    
     const name = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -9,7 +38,8 @@ const registerUser = async () => {
         const response = await fetch('http://localhost:5000/authentication/register', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'CSRF-TOKEN': csrfToken  
             },
             credentials: 'include',
             body: JSON.stringify({ name, password })
@@ -21,7 +51,7 @@ const registerUser = async () => {
             alert('Inscription réussie ! ' + data.message);
             window.location.href = '/src/pages/login.html';
         } else {
-            document.getElementById('register-error').textContent = 'Erreur lors de l\'inscription : ';
+            document.getElementById('register-error').textContent = 'Erreur lors de l\'inscription : ' + data.message;
         }
 
     } catch (error) {
@@ -29,32 +59,25 @@ const registerUser = async () => {
     }
 };
 
-const registerForm = document.getElementById('register-form');
-if (registerForm) {
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('register-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            registerUser();
-        });
-    });
-}
-
-
-//-----------------------------------------------------------------
-
 // Connexion utilisateur
 const loginUser = async () => {
+    console.log('🔄 Début loginUser');
+    
+    // S'assurer d'avoir le token CSRF
+    if (!csrfToken) {
+        console.log('⚠️ Pas de token CSRF, récupération...');
+        await getCSRFToken();
+    }
 
     const name = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-
-    console.log('Données de connexion:', { name, password });
 
     try {
         const response = await fetch('http://localhost:5000/authentication/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'CSRF-TOKEN': csrfToken  
             },
             credentials: 'include',
             body: JSON.stringify({ name, password })
@@ -63,28 +86,32 @@ const loginUser = async () => {
         const data = await response.json();
 
         if (response.ok) {
-            alert('Connection réussie ! ' + data.message);
+            alert('Connection réussie !');
             window.location.href = '/src/pages/dashboard.html';
         } else {
-            console.log('Erreur de login:', data);
+            console.log(' Erreur login:', data);
             document.getElementById('login-error').textContent = data.message;
         }
 
     } catch (error) {
+        console.log(' Erreur :', error);
         document.getElementById('login-error').textContent = 'Erreur de connexion';
     }
 };
 
-const loginForm = document.getElementById('login-form');
-if (loginForm) {
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            loginUser();
-        });
+// Event listeners
+const registerForm = document.getElementById('register-form');
+if (registerForm) {
+    registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        registerUser();
     });
 }
 
-
-
-
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        loginUser();
+    });
+}
