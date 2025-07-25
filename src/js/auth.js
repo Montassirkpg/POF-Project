@@ -114,7 +114,7 @@ const logoutUser = async () => {
             console.log('✅ Déconnexion réussie');
             alert('Déconnexion réussie !');
         } else {
-            console.log('⚠️ Erreur lors de la déconnexion côté serveur, mais nettoyage local effectué');
+            console.log('⚠️ Erreur lors de la déconnexion côté serveur');
         }
         
         window.location.href = '/index.html';
