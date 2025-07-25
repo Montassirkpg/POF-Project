@@ -87,7 +87,7 @@ const loginUser = async () => {
 
         if (response.ok) {
             alert('Connection réussie !');
-            window.location.href = '/src/pages/dashboard.html';
+            window.location.href = '/src/pages/index.html';
         } else {
             console.log(' Erreur login:', data);
             document.getElementById('login-error').textContent = data.message;
@@ -98,6 +98,37 @@ const loginUser = async () => {
         document.getElementById('login-error').textContent = 'Erreur de connexion';
     }
 };
+
+
+//Deconnection utilisateur 
+const logoutUser = async () => {
+    try {
+        console.log('🔄 Début déconnexion');
+        
+        const response = await fetch('http://localhost:5000/authentication/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+
+        localStorage.removeItem('access_token');
+        
+        if (response.ok) {
+            console.log('✅ Déconnexion réussie');
+            alert('Déconnexion réussie !');
+        } else {
+            console.log('⚠️ Erreur lors de la déconnexion côté serveur, mais nettoyage local effectué');
+        }
+        
+        window.location.href = '/index.html';
+        
+    } catch (error) {
+        console.error('❌ Erreur lors de la déconnexion:', error);
+        localStorage.removeItem('access_token');
+        window.location.href = '/index.html';
+    }
+};
+
+window.logoutUser = logoutUser;
 
 // Event listeners
 const registerForm = document.getElementById('register-form');
