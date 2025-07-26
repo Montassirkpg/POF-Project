@@ -1,50 +1,32 @@
-const API_BASE = "http://localhost:5000/api";
+import { getImageUrl, getProductById } from "./requests/product.request";
+import { fetchCSRFToken } from './requests/authentication.request';
+import { getCookie } from './utils/cookie.util';
 
 const input = document.getElementById("product-id");
 const button = document.getElementById("fetch-product-btn");
-const container = document.getElementById("product-detail");
+const container = document.getElementById("product-card");
 
-let csrfToken = null;
-
-
-async function getCSRFToken() {
-  const response = await fetch("http://localhost:5000/authentication/csrf", {
-    method: "POST",
-    credentials: "include"
-  });
-  csrfToken = await response.text();
-}
+await fetchCSRFToken();
+const csrf = getCookie('csrf_token');
 
 async function fetchProductById(productId) {
   try {
-    if (!csrfToken) await getCSRFToken();
+    const product = await getProductById(csrf, productId);
 
-    const response = await fetch(`${API_BASE}/product/${productId}`, {
-      method: "GET",
-      headers: {
-        "csrf-token": csrfToken
-      },
-      credentials: "include"
-    });
+    if (!product) throw new Error('Produit invalide !');
 
-    if (!response.ok) throw new Error("Produit non trouvé");
-
-    const product = await response.json();
     console.log("Réponse produit :", product);
 
-    const images = product.images;
-    const imageList = images && images.length
-      ? images.map(img => `
-          <img src="http://localhost:5000/uploads/${img.url}" alt="${product.label}" width="200" />
-        `).join('')
-      : `<p>Aucune image</p>`;
+    const images = product.images.map(i => `<img src="${getImageUrl(i.url)}" alt="${product.label}" width="200" />`);
 
     container.innerHTML = `
-      <h2>${product.label}</h2>
-      ${imageList}
+    <div class="product-card">
+      <h3>${product.label}</h3>
+      ${images.length > 0 ? images : '<p>Aucune image</p>'}
       <p>Description : ${product.description}</p>
       <p>Prix : ${product.price} €</p>
       <p>Catégorie : ${product.category}</p>
+    </div>
     `;
 
   } catch (error) {
@@ -52,7 +34,7 @@ async function fetchProductById(productId) {
   }
 }
 
-button.addEventListener("click", () => {
+button.addEventListener("click", async () => {
   const productId = input.value.trim();
 
   if (!productId || isNaN(productId)) {
@@ -60,5 +42,5 @@ button.addEventListener("click", () => {
     return;
   }
 
-  fetchProductById(productId);
+  await fetchProductById(productId);
 });

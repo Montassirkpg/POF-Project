@@ -1,42 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <title>Statistiques par catégorie</title>
-  <link rel="stylesheet" href="/src/style.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-  <h1> Statistiques par catégorie</h1>
-  <div id="resultats"></div>
-  <button onclick="location.href='/index.html'">Retour à l'accueil</button>
+  <section class="flex column flex-1 ai-center">
 
-  <script type="module">
-    const resultats = document.getElementById("resultats");
+    <div class="flex ai-center gap-8">
+      <button onclick="location.href='/index.html'">Retour à l'accueil</button>
+      <h1> Statistiques par catégorie</h1>
+    </div>
+    <div id="resultats"></div>
+  </section>
 
-    fetch("http://localhost:5000/api/categories/statistics")
-      .then(res => {
-        if (!res.ok) throw new Error("Échec de récupération des statistiques");
-        return res.json();
-      })
-      .then(data => {
-        if (!Array.isArray(data) || data.length === 0) {
-          resultats.innerHTML = "<p>Aucune donnée disponible.</p>";
-          return;
-        }
-
-        const list = document.createElement("ul");
-        data.forEach(stat => {
-          const item = document.createElement("li");
-          item.textContent = `${stat.categorie} : ${stat.nombre} produit(s)`;
-          list.appendChild(item);
-        });
-
-        resultats.appendChild(list);
-      })
-      .catch(err => {
-        resultats.innerHTML = `<p style="color:red;">Erreur : ${err.message}</p>`;
-        console.error("Erreur statistiques :", err);
-      });
-  </script>
+  <script type="module" src="../js/statistics.js"></script>
 </body>
+
 </html>

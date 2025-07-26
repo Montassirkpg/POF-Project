@@ -1,16 +1,25 @@
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
-  <link rel="stylesheet" href="/src/style.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-  <h1>Liste des produits</h1>
-  <button onclick="location.href='/src/pages/index.html'">
-    Accueil
-  </button>
-  <div id="product-list"></div>
+  <section class="flex column flex-1 ai-center">
+    <div class="flex gap-8 flex-1 p-8">
+      <button onclick="location.href='/src/pages/index.html'">
+        Accueil
+      </button>
+      <h1>Liste des produits</h1>
+    </div>
+
+    <div id="product-list" class="flex wrap jc-center gap-8 overflow-x"></div>
+  </section>
+
   <script type="module" src="/src/js/liste-product.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,41 @@
+@layer gap {
+    .gap-2 {
+        gap: 0.2rem;
+    }
+
+    .gap-4 {
+        gap: 0.4rem;
+    }
+
+    .gap-6 {
+        gap: 0.6rem;
+    }
+
+    .gap-8 {
+        gap: 0.8rem;
+    }
+
+    .gap-10 {
+        gap: 1.0rem;
+    }
+
+    .gap-12 {
+        gap: 1.2rem;
+    }
+
+    .gap-14 {
+        gap: 1.4rem;
+    }
+
+    .gap-16 {
+        gap: 1.6rem;
+    }
+
+    .gap-18 {
+        gap: 1.8rem;
+    }
+
+    .gap-20 {
+        gap: 2.0rem;
+    }
+}

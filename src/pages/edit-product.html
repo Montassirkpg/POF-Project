@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <title>Modifier un produit</title>
-  <link rel="stylesheet" href="/src/style.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-  <h1>Modifier un produit</h1>
-  <button onclick="location.href='/index.html'">Retour à l'accueil</button>
-  <form id="edit-form">
-    <label for="product-id">ID du produit à modifier :</label>
-    <input type="number" id="product-id" required />
-
-    <button type="button" id="fetch-btn">Charger</button>
-
-    <div id="product-fields" style="display: none;">
-      <label for="label">Nom :</label>
-      <input type="text" id="label" name="label" required />
-
-      <label for="description">Description :</label>
-      <textarea id="description" name="description"></textarea>
-
-      <label for="price">Prix :</label>
-      <input type="number" id="price" name="price" step="0.01" required />
-
-      <label for="category">Catégorie :</label>
-      <input type="text" id="category" name="category" required />
-
-      <button type="submit">Mettre à jour</button>
+  <section class="flex column flex-1 ai-center gap-16">
+    <div class="flex gap-4">
+      <button onclick="location.href='/index.html'">Retour à l'accueil</button>
+      <h1>Modifier un produit</h1>
     </div>
-  </form>
 
-  <div id="result"></div>
+    <form id="edit-form" class="flex column ai-center gap-4">
+      <div>
+        <label for="product-id">ID du produit à modifier :</label>
+        <input type="number" id="product-id" required />
+
+        <button type="button" id="fetch-btn">Charger</button>
+      </div>
+
+      <div id="product-fields" class="flex column gap-4" style="display: none;">
+        <label for="label">Nom :</label>
+        <input type="text" id="label" name="label" required />
+
+        <label for="description">Description :</label>
+        <textarea id="description" name="description"></textarea>
+
+        <label for="price">Prix :</label>
+        <input type="number" id="price" name="price" step="0.01" required />
+
+        <label for="category">Catégorie :</label>
+        <input type="text" id="category" name="category" required />
+
+        <button type="submit">Mettre à jour</button>
+      </div>
+    </form>
+
+    <div id="result"></div>
+  </section>
 
   <script type="module" src="/src/js/edit-product.js"></script>
 </body>
+
 </html>

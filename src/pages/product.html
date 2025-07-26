@@ -4,16 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Détail Produit</title>
-  <link rel="stylesheet" href="/src/style.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-  <h1>Afficher un Produit</h1>
+  <section class="flex flex-1 column ai-center">
+    <div class="flex gap-8">
+      <button onclick="location.href='/index.html'">Retour à l'accueil</button>
+      <h1>Afficher un Produit</h1>
+    </div>
 
-  <input type="number" id="product-id" placeholder="Entrez un ID de produit" />
-  <button id="fetch-product-btn">Afficher</button>
-  <div id="product-detail"></div>
-  <button onclick="location.href='/index.html'">Retour à l'accueil</button>
+    <div>
+      <input type="number" id="product-id" placeholder="Entrez un ID de produit" />
+      <button id="fetch-product-btn">Afficher</button>
+    </div>
+
+    <div id="product-card"></div>
+  </section>
 
   <script type="module" src="/src/js/product.js"></script>
 

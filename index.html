@@ -1,70 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Accueil</title>
-  <link rel="stylesheet" href="/src/style/main.css">
+  <link rel="stylesheet" href="./src/style.css">
 </head>
+
 <body>
-  <h1>Bienvenue</h1>
-  <div id="menu"></div>
+  <section class="flex flex-1 column ai-center">
+    <div>
+      <h1 class="text-center">Bienvenue</h1>
+    </div>
 
-  <script type="module">
-    const container = document.getElementById("menu");
+    <div id="menu"></div>
 
-    async function checkAuth() {
-      const token = localStorage.getItem("access_token");
-      if (!token) return false;
+  </section>
 
-      try {
-        const res = await fetch("http://localhost:5000/authentication/me", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          credentials: "include"
-        });
-
-        if (!res.ok) return false;
-
-        const data = await res.json();
-        return !!data?.name;
-      } catch (err) {
-        return false;
-      }
-    }
-
-    checkAuth().then(authenticated => {
-      if (authenticated) {
-        container.innerHTML = `
-          <button onclick="location.href='/src/pages/add-product.html'">Ajouter produit</button>
-          <button onclick="location.href='/src/pages/edit-product.html'">Modifier produit</button>
-          <button onclick="location.href='/src/pages/delete-product.html'">Supprimer produit</button>
-          <button onclick="logout()">Se déconnecter</button>
-        `;
-      } else {
-        container.innerHTML = `
-          <button onclick="location.href='/src/pages/liste-products.html'">Voir produits</button>
-          <button onclick="location.href='/src/pages/product.html'">Chercher par ID</button>
-          <button onclick="location.href='/src/pages/login.html'">Connexion</button>
-          <button onclick="location.href='/src/pages/register.html'">Inscription</button>
-           <button onclick="location.href='/src/pages/statistics.html'">Afficher statistiques</button>
-           <button onclick="location.href='/src/pages/csp-errors.html'">Csp errors</button>
-        `;
-      }
-    });
-
-    // ✅ Fonction globale de déconnexion
-    window.logout = function () {
-      localStorage.removeItem("access_token");
-      fetch("http://localhost:5000/authentication/logout", {
-        method: "POST",
-        credentials: "include"
-      }).finally(() => {
-        location.href = "index.html";
-      });
-    };
-  </script>
+  <script type="module" src="src/js/index.js"></script>
 </body>
+
 </html>

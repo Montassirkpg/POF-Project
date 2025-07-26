@@ -1,18 +1,27 @@
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connexion</title>
-  <link rel="stylesheet" href="/src/style.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-  <h1>Connexion</h1>
-  <form id="login-form">
-    <input type="test" id="username" placeholder="username" required>
-    <input type="password" id="password" placeholder="Mot de passe" required>
-    <button type="submit">Se connecter</button>
-  </form>
+  <section class="flex column flex-1 ai-center">
+    <div>
+      <h1>Connexion</h1>
+    </div>
+
+    <form id="login-form" class="flex gap-4">
+      <input type="test" id="username" placeholder="username" required>
+      <input type="password" id="password" placeholder="Mot de passe" required>
+      <button type="submit">Se connecter</button>
+    </form>
+  </section>
+
   <div id="login-error"></div>
   <script type="module" src="/src/js/auth.js"></script>
 </body>
+
 </html>

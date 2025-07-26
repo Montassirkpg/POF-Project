@@ -4,68 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <title>Dashboard</title>
-  <link rel="stylesheet" href="/src/style.css" />
+  <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-  <h1>Tableau de bord</h1>
-  <div id="menu"></div>
-  <div id="message" style="margin-top: 20px;"></div>
+  <section class="flex column flex-1 ai-center">
+    <div>
+      <h1>Tableau de bord</h1>
+    </div>
 
-  <script type="module">
-    const menu = document.getElementById("menu");
-    const message = document.getElementById("message");
-    
-    async function isAuthenticated() {
-      const token = localStorage.getItem("access_token");
-      if (!token) return false;
+    <div id="menu"></div>
+    <div id="message" style="margin-top: 20px;"></div>
 
-      try {
-        const res = await fetch("http://localhost:5000/authentication/me", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          credentials: 'include'
-        });
+    <script type="module" src="/src/js/dashboard.js"></script>
+  </section>
 
-        if (!res.ok) return false;
-        const data = await res.json();
-        return !!data?.name;
-      } catch {
-        return false;
-      }
-    }
-
-    isAuthenticated().then(auth => {
-      if (!auth) {
-        alert("Vous devez être connecté.");
-        window.location.href = "/index.html";
-      } else {
-        menu.innerHTML = `
-          <button onclick="location.href='/src/pages/add-product.html'">Ajouter produit</button>
-          <button onclick="location.href='/src/pages/edit-product.html'">Modifier produit</button>
-          <button onclick="location.href='/src/pages/delete-product.html'">Supprimer produit</button>
-          <button onclick="logout()">Se déconnecter</button>
-        `;
-        message.innerHTML = "<p>Bienvenue sur votre tableau de bord.</p>";
-      }
-    });
-
-
-    window.logout = async function () {
-      localStorage.removeItem("access_token");
-      try {
-        await fetch("http://localhost:5000/authentication/logout", {
-          method: "POST",
-          credentials: "include"
-        });
-      } catch (err) {
-        console.warn("Erreur de déconnexion :", err);
-      }
-      location.href = "/index.html";
-    };
-
-  </script>
 </body>
 
 </html>
