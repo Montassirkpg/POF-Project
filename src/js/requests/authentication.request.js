@@ -34,7 +34,7 @@ export async function register(name, password, csrf) {
             "csrf-token": csrf
         },
     })
-        .then((d) => d.json())
+        .then((d) => d)
         .catch((error) => console.error(error));
 }
 

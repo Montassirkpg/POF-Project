@@ -15,6 +15,7 @@ if (registerForm) {
         const password = document.getElementById('password').value;
 
         const response = await register(name, password, csrf);
+        const data = response ? await response.json() : "";
 
         if (!response.ok) {
             document.getElementById('register-error').textContent = 'Erreur lors de l\'inscription : ' + data.message;
@@ -42,7 +43,7 @@ if (loginForm) {
         const response = await login(name, password, csrf);
 
         if (!response.access_token) {
-            document.getElementById('login-error').textContent = data.message;
+            document.getElementById('login-error').textContent = response.message;
             return;
         }
 
