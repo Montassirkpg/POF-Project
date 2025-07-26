@@ -1,26 +1,70 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Accueil - Produits</title>
+  <title>Accueil</title>
   <link rel="stylesheet" href="/src/style/main.css">
 </head>
 <body>
-  <h1>Accueil - Tous les produits</h1>
-  <button onclick="location.href='/src/pages/login.html'">Se connecter</button>
-  <button onclick="location.href='/src/pages/register.html'">S'inscrire</button>
-  <button onclick="location.href='/src/pages/dashboard.html'">
-  Afficher tous les produits
-  </button>
-  <button onclick="location.href='/src/pages/product.html'">
-  Afficher un seul produit
-  </button>
-  <button onclick="location.href='/src/pages/add-product.html'">
-  Ajouter un produit
-  </button>
-  <button onclick="alert('Ajout au panier')">Ajouter un produit au panier</button>
-  <button onclick="location.href='/src/pages/stats.html'">Accéder à l'URL de statistiques</button>
-  <div id="product-list"></div>
-  <script type="module" src="/src/main.js"></script>
+  <h1>Bienvenue</h1>
+  <div id="menu"></div>
+
+  <script type="module">
+    const container = document.getElementById("menu");
+
+    async function checkAuth() {
+      const token = localStorage.getItem("access_token");
+      if (!token) return false;
+
+      try {
+        const res = await fetch("http://localhost:5000/authentication/me", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          credentials: "include"
+        });
+
+        if (!res.ok) return false;
+
+        const data = await res.json();
+        return !!data?.name;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    checkAuth().then(authenticated => {
+      if (authenticated) {
+        container.innerHTML = `
+          <button onclick="location.href='/src/pages/add-product.html'">Ajouter produit</button>
+          <button onclick="location.href='/src/pages/edit-product.html'">Modifier produit</button>
+          <button onclick="location.href='/src/pages/delete-product.html'">Supprimer produit</button>
+          <button onclick="logout()">Se déconnecter</button>
+        `;
+      } else {
+        container.innerHTML = `
+          <button onclick="location.href='/src/pages/liste-products.html'">Voir produits</button>
+          <button onclick="location.href='/src/pages/product.html'">Chercher par ID</button>
+          <button onclick="location.href='/src/pages/login.html'">Connexion</button>
+          <button onclick="location.href='/src/pages/register.html'">Inscription</button>
+           <button onclick="location.href='/src/pages/statistics.html'">Afficher statistiques</button>
+           <button onclick="location.href='/src/pages/csp-errors.html'">Csp errors</button>
+        `;
+      }
+    });
+
+    // ✅ Fonction globale de déconnexion
+    window.logout = function () {
+      localStorage.removeItem("access_token");
+      fetch("http://localhost:5000/authentication/logout", {
+        method: "POST",
+        credentials: "include"
+      }).finally(() => {
+        location.href = "index.html";
+      });
+    };
+  </script>
 </body>
 </html>

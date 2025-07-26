@@ -1,8 +1,4 @@
-
-
 let csrfToken = null;
-
-// Récupérer le token CSRF au chargement de la page
 const getCSRFToken = async () => {
     try {
         console.log('🔄 Récupération du token CSRF...');
@@ -21,25 +17,18 @@ const getCSRFToken = async () => {
     }
 };
 
-// Charger le token CSRF dès le début
 getCSRFToken();
-
-
-
-// Inscription utilisateur
 const registerUser = async () => {
-    // S'assurer d'avoir le token CSRF
+
     if (!csrfToken) await getCSRFToken();
-    
     const name = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-
     try {
         const response = await fetch('http://localhost:5000/authentication/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'CSRF-TOKEN': csrfToken  
+                'csrf-token': csrfToken
             },
             credentials: 'include',
             body: JSON.stringify({ name, password })
@@ -58,26 +47,20 @@ const registerUser = async () => {
         document.getElementById('register-error').textContent = 'Erreur de connexion';
     }
 };
-
-// Connexion utilisateur
 const loginUser = async () => {
     console.log('🔄 Début loginUser');
-    
-    // S'assurer d'avoir le token CSRF
     if (!csrfToken) {
         console.log('⚠️ Pas de token CSRF, récupération...');
         await getCSRFToken();
     }
-
     const name = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-
     try {
         const response = await fetch('http://localhost:5000/authentication/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'CSRF-TOKEN': csrfToken  
+                'csrf-token': csrfToken
             },
             credentials: 'include',
             body: JSON.stringify({ name, password })
@@ -86,6 +69,7 @@ const loginUser = async () => {
         const data = await response.json();
 
         if (response.ok) {
+            localStorage.setItem("access_token", data.access_token);
             alert('Connection réussie !');
             window.location.href = '/src/pages/dashboard.html';
         } else {
@@ -99,7 +83,6 @@ const loginUser = async () => {
     }
 };
 
-// Event listeners
 const registerForm = document.getElementById('register-form');
 if (registerForm) {
     registerForm.addEventListener('submit', (e) => {

@@ -1,15 +1,38 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
   <title>Modifier un produit</title>
   <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
   <h1>Modifier un produit</h1>
-  <form id="edit-product-form">
-    
+  <button onclick="location.href='/index.html'">Retour à l'accueil</button>
+  <form id="edit-form">
+    <label for="product-id">ID du produit à modifier :</label>
+    <input type="number" id="product-id" required />
+
+    <button type="button" id="fetch-btn">Charger</button>
+
+    <div id="product-fields" style="display: none;">
+      <label for="label">Nom :</label>
+      <input type="text" id="label" name="label" required />
+
+      <label for="description">Description :</label>
+      <textarea id="description" name="description"></textarea>
+
+      <label for="price">Prix :</label>
+      <input type="number" id="price" name="price" step="0.01" required />
+
+      <label for="category">Catégorie :</label>
+      <input type="text" id="category" name="category" required />
+
+      <button type="submit">Mettre à jour</button>
+    </div>
   </form>
-  <script type="module" src="/src/js/products.js"></script>
+
+  <div id="result"></div>
+
+  <script type="module" src="/src/js/edit-product.js"></script>
 </body>
 </html>

@@ -4,6 +4,54 @@ const input = document.getElementById("product-id");
 const button = document.getElementById("fetch-product-btn");
 const container = document.getElementById("product-detail");
 
+let csrfToken = null;
+
+
+async function getCSRFToken() {
+  const response = await fetch("http://localhost:5000/authentication/csrf", {
+    method: "POST",
+    credentials: "include"
+  });
+  csrfToken = await response.text();
+}
+
+async function fetchProductById(productId) {
+  try {
+    if (!csrfToken) await getCSRFToken();
+
+    const response = await fetch(`${API_BASE}/product/${productId}`, {
+      method: "GET",
+      headers: {
+        "csrf-token": csrfToken
+      },
+      credentials: "include"
+    });
+
+    if (!response.ok) throw new Error("Produit non trouvé");
+
+    const product = await response.json();
+    console.log("Réponse produit :", product);
+
+    const images = product.images;
+    const imageList = images && images.length
+      ? images.map(img => `
+          <img src="http://localhost:5000/uploads/${img.url}" alt="${product.label}" width="200" />
+        `).join('')
+      : `<p>Aucune image</p>`;
+
+    container.innerHTML = `
+      <h2>${product.label}</h2>
+      ${imageList}
+      <p>Description : ${product.description}</p>
+      <p>Prix : ${product.price} €</p>
+      <p>Catégorie : ${product.category}</p>
+    `;
+
+  } catch (error) {
+    container.innerHTML = `<p>Erreur : ${error.message}</p>`;
+  }
+}
+
 button.addEventListener("click", () => {
   const productId = input.value.trim();
 
@@ -12,31 +60,5 @@ button.addEventListener("click", () => {
     return;
   }
 
-  fetch(`${API_BASE}/product/${productId}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Produit non trouvé");
-      }
-      return response.json();
-    })
-    .then(product => {
-      console.log("Réponse produit :", product);
-      const p = product[0];
-      const images = product.images;
-      const imageList = images && images.length
-        ? images.map(img => `
-       <img src="http://localhost:5000/uploads/${img.url}" alt="${p.label}" width="200" />
-       `).join('')
-        : `<p>Aucune image</p>`;
-      container.innerHTML = `
-    <h2>${p.label}</h2>
-    ${imageList}
-    <p>Description : ${p.description}</p>
-    <p>Prix : ${p.price} €</p>
-    <p>Catégorie : ${p.category}</p>
-  `;
-    })
-    .catch(error => {
-      container.innerHTML = `<p>Erreur : ${error.message}</p>`;
-    });
+  fetchProductById(productId);
 });

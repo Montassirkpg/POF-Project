@@ -14,7 +14,6 @@ await fetch("http://localhost:5000/authentication/csrf", {
   credentials: "include"
 });
 
-
 fetch(API_URL, {
   method: "GET",
   headers: {
