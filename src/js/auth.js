@@ -1,7 +1,7 @@
 let csrfToken = null;
 const getCSRFToken = async () => {
     try {
-        console.log('🔄 Récupération du token CSRF...');
+        console.log(' Récupération du token CSRF...');
         const response = await fetch('http://localhost:5000/authentication/csrf', {
             method: 'POST',
             credentials: 'include'
@@ -50,7 +50,7 @@ const registerUser = async () => {
 const loginUser = async () => {
     console.log('🔄 Début loginUser');
     if (!csrfToken) {
-        console.log('⚠️ Pas de token CSRF, récupération...');
+        console.log(' Pas de token CSRF, récupération...');
         await getCSRFToken();
     }
     const name = document.getElementById('username').value;
